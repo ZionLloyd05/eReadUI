@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-sec-brand">
+    <a class="navbar-brand bg-border-right pd-r-20" routerLink="/">
+      <i class="mdi mdi-home menu-icon"></i>
+    </a>
+    <a class="navbar-brand" href="#">
+      <!-- <i class="fab fa-linkedin"></i> -->
+      <i class="mdi mdi mdi-linkedin-box menu-icon"></i>
+    </a>
+  
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <ul class="navbar-nav  mt-2 mt-md-0">
+        <li class="nav-item active">
+          <a mat-button routerLinkActive="active current" class="nav-link bg-border-right f-15" routerLink="/library">
+            <i class="mdi mdi-library menu-icon"></i> Library
+          </a>
+           <!-- <a mat-button routerLinkActive="active current" class="nav-link bg-border-right f-15" routerLink="/test">
+            <i class="mdi mdi-library menu-icon"></i> Test
+          </a> -->
+        </li>
+        <li class="nav-item">
+          <!-- <a class="text-white dropdown-toggle nav-link f-15" *ngIf="loggedIn()" mat-button [matMenuTriggerFor]="menu">
+            <i class="mdi mdi-account-circle menu-icon"></i> Alagbala Damilola
+          </!-->
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/admin">
+              <i class="mdi mdi-file-document-box menu-icon"></i> Dashboard
+            </button>
+            <!-- <button mat-menu-item (click)="logOut()">
+              <i class="mdi mdi-library menu-icon"></i> Logout
+            </button> -->
+          </mat-menu>
+  
+          <a mat-button routerLinkActive="active current" class="nav-link f-15" routerLink="/auth">
+            <i class="mdi mdi-account-circle menu-icon"></i> Sign In | Join Up
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  

@@ -1,0 +1,26 @@
+import { ILogin } from '../models/ILogin';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, tap } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { IUser } from '../models/IUser';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  baseUrl = 'http://localhost:5000/api/auth';
+  jwtHelper = new JwtHelperService();
+  decodedToken: any;
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  authenticate(payload: ILogin): Observable<any> {
+    const url = `${this.baseUrl}/login`;
+    return this.http.post(url, payload);
+  }
+}
