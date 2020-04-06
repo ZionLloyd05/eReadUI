@@ -1,3 +1,4 @@
+import { NotifyService } from './../../shared/services/notify.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { INavbar } from 'src/app/viewmodels/INavbar';
 import { Store } from '@ngrx/store';
@@ -15,7 +16,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public navbarModel: INavbar;
   subscriber;
   constructor(
-    private store: Store<fromAuth.AppState>
+    private store: Store<fromAuth.AppState>,
+    private notify: NotifyService
   ) { }
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   initializeLogout(isLoggedOut){
     if (isLoggedOut) {
       this.store.dispatch(new authActions.Logout());
+      this.notify.success('See you soon!');
     }
   }
 

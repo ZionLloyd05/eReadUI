@@ -1,3 +1,4 @@
+import { NotifyService } from './../../../shared/services/notify.service';
 import { AuthService } from './../../services/auth.service';
 import { IUser } from './../../models/IUser';
 import { Component, OnInit } from '@angular/core';
@@ -17,7 +18,7 @@ export class AuthComponent implements OnInit {
   authState;
   constructor(
     private store: Store<fromAuth.AppState>,
-    private authService: AuthService
+    private notify: NotifyService
   ) { }
 
   ngOnInit() {
@@ -29,6 +30,7 @@ export class AuthComponent implements OnInit {
       .subscribe(state => {
         this.authState = state.auth;
       });
+    this.notify.success('Welcome Back!');
   }
 
 }
