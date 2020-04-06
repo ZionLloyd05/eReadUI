@@ -1,5 +1,5 @@
 <div>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="authState?.isAuthenticating" mode="indeterminate"></mat-progress-bar>
     <div class="row bg-div-brand" style="padding: 40px 80px;">
       <div class="col-md-5 col-xs-12">
         <app-signin (login)="onLogin($event)"></app-signin>

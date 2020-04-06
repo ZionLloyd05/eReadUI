@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ILogin } from '../../models/ILogin';
 
@@ -11,7 +11,9 @@ export class SigninComponent implements OnInit {
 
   signInForm: FormGroup;
   userPayload: ILogin;
+
   @Output() login = new EventEmitter();
+  @Input() user;
 
   constructor(
     private formBuilder: FormBuilder

@@ -23,4 +23,15 @@ export class AuthService {
     const url = `${this.baseUrl}/login`;
     return this.http.post(url, payload);
   }
+
+
+  decodeToken(token: string) {
+    return this.jwtHelper.decodeToken(token);
+  }
+
+  getToken(): string {
+    const token = localStorage.getItem('token') || '';
+    return token;
+  }
+
 }

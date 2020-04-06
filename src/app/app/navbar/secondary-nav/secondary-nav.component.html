@@ -24,19 +24,20 @@
           </a> -->
         </li>
         <li class="nav-item">
-          <!-- <a class="text-white dropdown-toggle nav-link f-15" *ngIf="loggedIn()" mat-button [matMenuTriggerFor]="menu">
-            <i class="mdi mdi-account-circle menu-icon"></i> Alagbala Damilola
-          </!-->
+          <a class="text-white dropdown-toggle nav-link f-15" *ngIf="model?.isAuthenticated" mat-button [matMenuTriggerFor]="menu">
+            <i class="mdi mdi-account-circle menu-icon"></i> {{model.name}}
+          </a>
+          
           <mat-menu #menu="matMenu">
             <button mat-menu-item routerLink="/admin">
               <i class="mdi mdi-file-document-box menu-icon"></i> Dashboard
             </button>
-            <!-- <button mat-menu-item (click)="logOut()">
+            <button *ngIf="model?.isAuthenticated" mat-menu-item (click)="logOut()">
               <i class="mdi mdi-library menu-icon"></i> Logout
-            </button> -->
+            </button>
           </mat-menu>
   
-          <a mat-button routerLinkActive="active current" class="nav-link f-15" routerLink="/auth">
+          <a mat-button *ngIf="!model?.isAuthenticated" routerLinkActive="active current" class="nav-link f-15" routerLink="/auth">
             <i class="mdi mdi-account-circle menu-icon"></i> Sign In | Join Up
           </a>
         </li>
