@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from '../models/IUser';
 import { Observable } from 'rxjs';
+import { IRegister } from '../models/IRegister';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,11 @@ export class AuthService {
     return this.http.post(url, payload);
   }
 
+  register(payload: IRegister): Observable<any> {
+    const url = `${this.baseUrl}/register`;
+    return this.http.post(url, payload);
+  }
+
 
   decodeToken(token: string) {
     return this.jwtHelper.decodeToken(token);
@@ -32,6 +38,10 @@ export class AuthService {
   getToken(): string {
     const token = localStorage.getItem('token') || '';
     return token;
+  }
+
+  isUserAdmin(role: string): boolean {
+    return role === 'Admin';
   }
 
 }

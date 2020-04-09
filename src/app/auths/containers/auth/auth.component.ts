@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 
 import * as authActions from '../../state/actions';
 import * as fromAuth from '../../state/reducers';
+import { IRegister } from '../../models/IRegister';
 
 @Component({
   selector: 'app-auth',
@@ -29,8 +30,24 @@ export class AuthComponent implements OnInit {
     this.store
       .subscribe(state => {
         this.authState = state.auth;
+        if (this.authState && this.authState.isAuthenticated) {
+          this.notify.success('Welcome Back!');
+        } else if(!this.authState.isAuthenticating && !this.authState.isAuthenticated) {
+          this.notify.error('Invalid Credential, Try again');
+        }
       });
-    this.notify.success('Welcome Back!');
+  }
+
+  onRegister(userPayload: IRegister) {
+    this.store.dispatch(new authActions.Register(userPayload));
+    this.store
+      .subscribe(state => {
+        if (state.auth.isRegSuccessful && state.auth.isRegDone) {
+          this.notify.success('Good to have you join us!');
+        } else if (!state.auth.isAuthenticating && !state.auth.isRegSuccessful) {
+          this.notify.error('Something went wrong!');
+        }
+      })
   }
 
 }

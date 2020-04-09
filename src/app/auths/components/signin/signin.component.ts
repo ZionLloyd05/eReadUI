@@ -30,7 +30,7 @@ export class SigninComponent implements OnInit {
     this.userPayload = {
       email: this.signInForm.controls.email.value,
       password: this.signInForm.controls.password.value
-    }
+    };
 
     this.login.emit(this.userPayload);
   }

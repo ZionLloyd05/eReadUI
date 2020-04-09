@@ -12,8 +12,6 @@ import { authReducer } from './state/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 
-
-
 @NgModule({
   declarations: [AuthComponent, SigninComponent, SignupComponent],
   imports: [

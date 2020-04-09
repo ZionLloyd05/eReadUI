@@ -7,8 +7,9 @@ import * as authActions from './actions';
 import { AuthService } from '../services/auth.service';
 
 import { Observable, of } from 'rxjs';
-import { map, mergeMap, catchError, switchMap } from 'rxjs/operators';
+import { map, mergeMap, exhaustMap, catchError, switchMap } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
+import { IRegister } from '../models/IRegister';
 
 @Injectable()
 export class AuthEffect {
@@ -38,4 +39,22 @@ export class AuthEffect {
                     );
             })
         );
-};
+
+    @Effect()
+    Register$: Observable<Action> = this.action$
+        .pipe(
+            ofType<authActions.Register>(
+                authActions.AuthActionTypes.REGISTER
+            ),
+            map((action: authActions.Register) => action.payload),
+            exhaustMap((newUser: IRegister) => 
+                this.authService.register(newUser)
+                    .pipe(
+                        map(() =>
+                            new authActions.RegisterCompleted()
+                        ),
+                        catchError(err => of(new authActions.RegisterFailed(err)))
+                    )
+            )
+        );
+}

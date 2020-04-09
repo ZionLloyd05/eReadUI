@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { INavbar } from 'src/app/viewmodels/INavbar';
+import { AuthService } from 'src/app/auths/services/auth.service';
 
 @Component({
   selector: 'app-secondary-nav',
@@ -11,7 +12,10 @@ export class SecondaryNavComponent implements OnInit {
   @Input() model: INavbar;
   @Output() logoutInit = new EventEmitter();
 
-  constructor() { }
+
+  constructor(
+    public authService: AuthService
+  ) { }
 
   ngOnInit() {
   }

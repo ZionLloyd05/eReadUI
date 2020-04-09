@@ -9,8 +9,10 @@ export interface AuthState {
     claims: any;
     isAuthenticating: boolean;
     isAuthenticated: boolean;
+    isRegSuccessful: boolean;
+    isRegDone: boolean;
     error: string;
-};
+}
 
 export interface AppState extends fromRoot.IAppState {
     auth: AuthState;
@@ -21,6 +23,8 @@ export const initialState: AuthState = {
     claims: null,
     isAuthenticating: false,
     isAuthenticated: false,
+    isRegSuccessful: false,
+    isRegDone: false,
     error: ''
 };
 
@@ -62,6 +66,28 @@ export function authReducer(
                 isAuthenticating: false,
                 isAuthenticated: false,
                 error: ''
+            };
+        }
+        case authActions.AuthActionTypes.REGISTER: {
+            return {
+                ...state,
+                isAuthenticating: true
+            };
+        }
+        case authActions.AuthActionTypes.REGISTER_COMPLETE: {
+            return {
+                ...state,
+                isAuthenticating: false,
+                isRegSuccessful: true,
+                isRegDone: true
+            };
+        }
+        case authActions.AuthActionTypes.REGISTER_FAILURE: {
+            return {
+                ...state,
+                isAuthenticating: false,
+                isRegSuccessful: false,
+                error: action.payload
             };
         }
         default: {

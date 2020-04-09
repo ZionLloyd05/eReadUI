@@ -15,7 +15,7 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="navbar-nav  mt-2 mt-md-0">
-        <li class="nav-item active">
+        <li class="nav-item active"> 
           <a mat-button routerLinkActive="active current" class="nav-link bg-border-right f-15" routerLink="/library">
             <i class="mdi mdi-library menu-icon"></i> Library
           </a>
@@ -29,7 +29,7 @@
           </a>
           
           <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="/admin">
+            <button *ngIf="authService.isUserAdmin(model?.role)" mat-menu-item routerLink="/admin">
               <i class="mdi mdi-file-document-box menu-icon"></i> Dashboard
             </button>
             <button *ngIf="model?.isAuthenticated" mat-menu-item (click)="logOut()">
