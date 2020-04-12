@@ -4,7 +4,7 @@
     </a>
     <a class="navbar-brand" href="#">
       <!-- <i class="fab fa-linkedin"></i> -->
-      <i class="mdi mdi mdi-linkedin-box menu-icon"></i>
+      <i class="mdi mdi-coin"></i>&nbsp;<span style="font-size: 14px;">+230 Reader's Coin</span>
     </a>
   
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -15,13 +15,15 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="navbar-nav  mt-2 mt-md-0">
+        <li class="nav-item active">
+            <a mat-button routerLinkActive="active current" class="nav-link f-15" routerLink="/test">
+              <i class="mdi mdi-bell-ring"></i> <sup>3</sup>
+            </a>
+        </li>
         <li class="nav-item active"> 
           <a mat-button routerLinkActive="active current" class="nav-link bg-border-right f-15" routerLink="/library">
             <i class="mdi mdi-library menu-icon"></i> Library
           </a>
-           <!-- <a mat-button routerLinkActive="active current" class="nav-link bg-border-right f-15" routerLink="/test">
-            <i class="mdi mdi-library menu-icon"></i> Test
-          </a> -->
         </li>
         <li class="nav-item">
           <a class="text-white dropdown-toggle nav-link f-15" *ngIf="model?.isAuthenticated" mat-button [matMenuTriggerFor]="menu">

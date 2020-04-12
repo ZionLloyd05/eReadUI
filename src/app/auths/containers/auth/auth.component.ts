@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import * as authActions from '../../state/actions';
 import * as fromAuth from '../../state/reducers';
 import { IRegister } from '../../models/IRegister';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -19,7 +20,8 @@ export class AuthComponent implements OnInit {
   authState;
   constructor(
     private store: Store<fromAuth.AppState>,
-    private notify: NotifyService
+    private notify: NotifyService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,11 @@ export class AuthComponent implements OnInit {
         this.authState = state.auth;
         if (this.authState && this.authState.isAuthenticated) {
           this.notify.success('Welcome Back!');
+          if(this.authState.claims && this.authState.claims.role  === 'Admin') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/']);
+          }
         } else if(!this.authState.isAuthenticating && !this.authState.isAuthenticated) {
           this.notify.error('Invalid Credential, Try again');
         }

@@ -7,6 +7,7 @@ export enum AuthActionTypes {
     LOGIN = '[Auth] Login',
     LOGIN_COMPLETE = '[Auth] Login Completed',
     LOGIN_FAILURE = '[Auth] Login Failed',
+    RETRY_LOGIN = '[Auth] Retry Login',
     LOGOUT = '[Auth] Logout',
     REGISTER = '[Registration] Registration',
     REGISTER_COMPLETE = '[Registration] Registration Completed',
@@ -21,6 +22,11 @@ export class Login implements Action {
 export class LoginComplete implements Action {
     readonly type = AuthActionTypes.LOGIN_COMPLETE;
     constructor(public payload: any) {}
+}
+
+export class RetryLogin implements Action {
+    readonly type = AuthActionTypes.RETRY_LOGIN;
+    constructor(public payload: string) {}
 }
 
 export class LoginFailed implements Action {
@@ -49,6 +55,7 @@ export type Action =
 Login               |
 LoginComplete       |
 LoginFailed         |
+RetryLogin          |
 Logout              |
 Register            |
 RegisterCompleted   |

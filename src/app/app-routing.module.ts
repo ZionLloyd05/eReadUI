@@ -4,7 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-  { path: 'auth', component: AuthComponent }
+  { path: 'auth', component: AuthComponent },
+  {
+    path: 'admin',
+    loadChildren: () => import('./features/admin/admin.module')
+      .then(m => m.AdminModule)
+  }
 ];
 
 @NgModule({

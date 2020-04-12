@@ -1,13 +1,15 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "./vendors/mdi/css/materialdesignicons.min.css";
-/* @import url("https://fonts.googleapis.com/css?family=Montserrat|Raleway:400,500&display=swap"); */
+@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');/* @import url("https://fonts.googleapis.com/css?family=Montserrat|Raleway:400,500&display=swap"); */
 /* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+
 
 body {
   background: #f0f0f0;
   min-height:100%; 
   position:relative; 
-  padding-bottom:[footer-height] 
+  padding-bottom:[footer-height];
+  font-family: 'Varela Round', sans-serif;
 }
 /* html { height: 100%; }  */
 
@@ -19,11 +21,6 @@ body {
     color: white;
 }
 
-@font-face {
-    font-family: "Montserrat";
-    src: url("/assets/fonts/Montserrat-Regular.ttf") format("truetype");
-    font-weight: 300;
-  }
   
   h1,
   h2,
@@ -36,7 +33,7 @@ body {
   p,
   table,
   div {
-    font-family: "Montserrat", sans-serif !important;
+    font-family: 'Varela Round', sans-serif;
   }
   
   .icon-on-white-bg {

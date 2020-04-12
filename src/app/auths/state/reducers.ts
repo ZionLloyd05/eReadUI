@@ -49,6 +49,22 @@ export function authReducer(
                 isAuthenticated: true,
             };
         }
+        case authActions.AuthActionTypes.RETRY_LOGIN: {
+            const token = action.payload;
+            if (isTokenExpired(token)) {
+                return {
+                    ...state,
+                    isAuthenticating: false,
+                    isAuthenticated: false,
+                };
+            }
+            return {
+                ...state,
+                ...getAuthentication(token),
+                isAuthenticating: false,
+                isAuthenticated: true,
+            };
+        }
         case authActions.AuthActionTypes.LOGIN_FAILURE: {
             return {
                 ...state,
@@ -97,27 +113,41 @@ export function authReducer(
 }
 
 function saveToken(token: string) {
-    // if (rememberMe) {
-      localStorage.setItem('token', token);
-    // } else {
-    //   sessionStorage.setItem('token', token);
-    // }
+
+    const tokenInStorage = localStorage.getItem('token') || null;
+    if (tokenInStorage != null) {
+        localStorage.setItem('token', token);
+    }
 }
 
 
 function getAuthentication(token) {
+    console.log('hello bro');
+    console.log(token);
     const jwtHelper = new JwtHelperService();
     if (token == null) {
         return { token: null, claims: null, error: null };
     } else {
-        const claims = jwtHelper.decodeToken(token);
-        if (claims.exp < new Date().getTime() / 1000) {
-        return { token: null, claims: null, error: null };
+        if(isTokenExpired(token)){
+            return { token: null, claims: null, error: null };
         } else {
-        return { token, claims, error: null };
+            const claims = jwtHelper.decodeToken(token);
+            return { token, claims, error: null };
         }
     }
-};
+}
+
+function isTokenExpired(token) {
+    const jwtHelper = new JwtHelperService();
+
+    const claims = jwtHelper.decodeToken(token);
+
+    if (claims.exp < new Date().getTime() / 1000) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function destroyToken() {
     localStorage.removeItem('token');
