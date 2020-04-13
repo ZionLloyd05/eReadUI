@@ -33,7 +33,6 @@ export class AuthEffect {
                             return new authActions.LoginComplete(res);
                         }),
                         catchError(err => {
-                            console.log(err);
                             return of(new authActions.LoginFailed(err));
                         })
                     );

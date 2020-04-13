@@ -16,6 +16,8 @@ import { SecondaryNavComponent } from './app/navbar/secondary-nav/secondary-nav.
 import { FooterComponent } from './app/footer/footer.component';
 import { MatMenuModule, MatSnackBarModule } from '@angular/material';
 import { environment } from 'src/environments/environment';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptor } from './shared/utils/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,12 +33,20 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     MatSnackBarModule,
     MatMenuModule,
+    HttpClientModule,
     AuthModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     environment.production ? [] : StoreDevtoolsModule.instrument()
   ],
-  providers: [NotifyService],
+  providers: [
+    NotifyService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

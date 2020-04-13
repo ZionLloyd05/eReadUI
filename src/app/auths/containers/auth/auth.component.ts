@@ -1,3 +1,4 @@
+import { UNAUTHORIZED } from './../../../shared/utils/SD';
 import { NotifyService } from './../../../shared/services/notify.service';
 import { AuthService } from './../../services/auth.service';
 import { IUser } from './../../models/IUser';
@@ -34,13 +35,17 @@ export class AuthComponent implements OnInit {
         this.authState = state.auth;
         if (this.authState && this.authState.isAuthenticated) {
           this.notify.success('Welcome Back!');
-          if(this.authState.claims && this.authState.claims.role  === 'Admin') {
+          if (this.authState.claims && this.authState.claims.role  === 'Admin') {
             this.router.navigate(['/admin']);
           } else {
             this.router.navigate(['/']);
           }
-        } else if(!this.authState.isAuthenticating && !this.authState.isAuthenticated) {
-          this.notify.error('Invalid Credential, Try again');
+        } else if (!this.authState.isAuthenticating && !this.authState.isAuthenticated) {
+          if (this.authState.error === UNAUTHORIZED) {
+            this.notify.error('Invalid Credentials, Try again!');
+          } else {
+            this.notify.error('Something went wrong, Try again!');
+          }
         }
       });
   }

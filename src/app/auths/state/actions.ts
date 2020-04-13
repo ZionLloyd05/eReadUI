@@ -1,7 +1,6 @@
 import { IRegister } from './../models/IRegister';
-import { Action } from '@ngrx/store';
-import { Update } from '@ngrx/entity';
 import { ILogin } from '../models/ILogin';
+import { Action } from '@ngrx/store';
 
 export enum AuthActionTypes {
     LOGIN = '[Auth] Login',
@@ -31,7 +30,7 @@ export class RetryLogin implements Action {
 
 export class LoginFailed implements Action {
     readonly type = AuthActionTypes.LOGIN_FAILURE;
-    constructor(public payload: string) {}
+    constructor(public payload: any) {}
 }
 
 export class Logout implements Action {
@@ -51,7 +50,7 @@ export class RegisterFailed implements Action {
     readonly type = AuthActionTypes.REGISTER_FAILURE;
     constructor(public payload: any) {}
 }
-export type Action =
+export type AuthAction =
 Login               |
 LoginComplete       |
 LoginFailed         |
