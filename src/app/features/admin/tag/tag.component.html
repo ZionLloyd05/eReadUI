@@ -20,15 +20,15 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         <ng-container matColumnDef="s/n">
             <mat-header-cell *matHeaderCellDef mat-sort-header>S/N</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+            <mat-cell *matCellDef="let element; let i = index;">{{(i+1) + (myPaginator.pageIndex * myPaginator.pageSize) }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element?.name}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+            <mat-cell *matCellDef="let element">{{element?.description}}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
@@ -51,5 +51,5 @@
         <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(tagList!=null && tagList.data.length == 0)}">
         </mat-footer-row>
     </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButton></mat-paginator>
+    <mat-paginator #myPaginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButton></mat-paginator>
 </div>

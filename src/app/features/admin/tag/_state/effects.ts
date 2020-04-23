@@ -21,7 +21,7 @@ export class TagEffect {
             ofType<tagActions.GetAll>(
                 tagActions.TagActionTypes.GET_ALL
             ),
-            mergeMap((action: tagActions.GetAll) =>
+            mergeMap(() =>
                 this.tagService.getTags()
                     .pipe(
                         map((tags: Tag[]) =>
@@ -32,4 +32,22 @@ export class TagEffect {
             )
         );
 
+    @Effect()
+    createTag$: Observable<Action> = this.action$
+        .pipe(
+            ofType<tagActions.Create>(
+                tagActions.TagActionTypes.CREATE
+            ),
+            map((action: tagActions.Create) => action.payload),
+            mergeMap((tag: Tag) =>
+                this.tagService.createTag(tag)
+                    .pipe(
+                        map(
+                            (newTag: Tag) =>
+                                new tagActions.CreateCompleted(newTag)
+                        ),
+                        catchError(err => of(new tagActions.CreateFailed(err)))
+                    )
+                )
+        );
 }

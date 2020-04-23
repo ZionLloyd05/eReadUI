@@ -84,7 +84,7 @@ export function tagReducer(
                 ...state,
                 isLoaded: true,
                 isLoading: false,
-                tag: action.payload
+                tags: state.tags.concat(action.payload)
             };
         }
         case tagActions.TagActionTypes.CREATE_FAILED: {

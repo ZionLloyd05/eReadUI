@@ -48,19 +48,6 @@ export class TagComponent implements OnInit {
       this.tagList.paginator = this.paginator;
     });
 
-    // this.service.getTags()
-    //   .subscribe(tags => {
-    //     let arr = [];
-    //     arr = Object.values(tags);
-
-    //     this.tagList = new MatTableDataSource(arr);
-    //     this.tagList.sort = this.sort;
-    //     this.tagList.paginator = this.paginator;
-    //   }, (err) => {
-    //     this.tagList = new MatTableDataSource([]);
-    //     this.notify.error(err);
-    //   });
-    // console.log(this.tagList);
   }
 
   applyFilter() {
@@ -77,7 +64,39 @@ export class TagComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
 
-    this.dialog.open(TagBoxComponent, dialogConfig);
+    const dialogRef = this.dialog.open(TagBoxComponent, dialogConfig);
+
+    const sub = dialogRef.componentInstance.saveTag
+      .subscribe(async (payload) => {
+        console.log('perform a save now');
+        console.log(payload);
+        await this.saveTag(payload);
+
+        // this.store.subscribe(state => {
+        //   const tag = state.tags.tag;
+        //   const data = this.tagList.data;
+        //   data.push(tag);
+        //   this.tagList.data = data;
+        // });
+      });
+  }
+
+  async saveTag(payload) {
+    console.log('here');
+    console.log(payload);
+    const { tagPayload, formDt } = payload;
+    if (tagPayload.id === 0) {
+      // save tag
+      await this.store.dispatch(new tagActions.Create(tagPayload));
+
+    } else {
+      // this.service.updateTag(tagPayload);
+      console.log('update tag');
+    }
+    formDt.resetForm();
+    this.service.tagForm.reset();
+    this.service.initializeFormGroup();
+    this.notify.success('Form Submitted Successfully');
   }
 
 }

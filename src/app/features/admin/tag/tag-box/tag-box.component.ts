@@ -1,6 +1,6 @@
 import { TagService } from './../../_services/tag.service';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Tag } from '../../_models/ITag';
 
@@ -12,8 +12,9 @@ import { Tag } from '../../_models/ITag';
 export class TagBoxComponent implements OnInit {
 
   tagForm: FormGroup;
+  @Output() saveTag = new EventEmitter();
   constructor(
-    public tagService: TagService,
+    public service: TagService,
     public dialogRef: MatDialogRef<TagBoxComponent>,
     // private notify: NotifyService
   ) { }
@@ -23,28 +24,28 @@ export class TagBoxComponent implements OnInit {
   }
 
   onClear() {
-    this.tagService.tagForm.reset();
-    this.tagService.initializeFormGroup();
+    this.service.tagForm.reset();
+    this.service.initializeFormGroup();
     this.dialogRef.close();
   }
 
-  onSubmit() {
-    // if (this.tagService.tagForm.valid) {
-    //   const tagPayload: Tag = {
-    //     id: this.tagService.tagForm.get('id').value,
-    //     name: this.tagService.tagForm.get('name').value,
-    //     description: this.tagService.tagForm.get('description').value
-    //   };
+  onSubmit(formDirective: FormGroupDirective) {
+    console.log('submitted');
+    console.log(this.service.tagForm);
+    if (this.service.tagForm.valid) {
+      console.log('tag valid');
+      const tagPayload: Tag = {
+        id: this.service.tagForm.get('id').value,
+        name: this.service.tagForm.get('name').value,
+        description: this.service.tagForm.get('description').value
+      };
 
-    //   if (this.tagService.tagForm.get('id').value === 0) {
-    //     // save tag
-    //   } else {
-    //     this.tagService.updateTag(tagPayload);
-    //   }
-    //   this.tagService.tagForm.reset();
-    //   this.tagService.initializeFormGroup();
-    //   this.alertifyService.success('Form Submitted Successfully');
-    //   this.onClear();
-    // }
+      const payload: any = {
+        tagPayload,
+        formDt: formDirective
+      };
+
+      this.saveTag.emit(payload);
+    }
   }
 }
