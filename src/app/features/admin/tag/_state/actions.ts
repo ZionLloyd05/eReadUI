@@ -2,9 +2,9 @@ import { Tag } from './../../_models/ITag';
 import { Action } from '@ngrx/store';
 
 export enum TagActionTypes {
-    GET_ALL = '[Tag] Get',
-    GET_ALL_COMPLETED = '[Tag] Get Completed',
-    GET_ALL_FAILED = '[Tag] Get Failed',
+    GET_ALL = '[Tag] Get All',
+    GET_ALL_COMPLETED = '[Tag] Get All Completed',
+    GET_ALL_FAILED = '[Tag] Get All Failed',
     GET_SINGLE = '[Tag] Get Single',
     GET_SINGLE_COMPLETED = '[Tag] Get Single Completed',
     GET_SINGLE_FAILED = '[Tag] Get Single Failed',

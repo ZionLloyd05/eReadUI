@@ -11,8 +11,6 @@ import { tagReducer } from './admin/tag/_state/reducers';
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature('tags', tagReducer),
-    EffectsModule.forFeature([TagEffect])
   ]
 })
 export class FeaturesModule { }

@@ -36,30 +36,30 @@ export class TagComponent implements OnInit {
   @ViewChild(MatPaginator, null) paginator: MatPaginator;
   // count = 1;
   ngOnInit() {
-    // this.store.dispatch(new tagActions.GetAll());
-    // this.store.subscribe(state => {
-      // this.tags = state.tags.tags;
-      // console.log(this.tags);
-      // let arr = [];
-      // arr = Object.values(this.tags);
+    this.store.dispatch(new tagActions.GetAll());
+    this.store.subscribe(state => {
+      this.tags = state.tags.tags;
+      console.log(this.tags);
+      let arr = [];
+      arr = Object.values(this.tags);
 
-      // this.tagList = new MatTableDataSource(arr);
-      // this.tagList.sort = this.sort;
-      // this.tagList.paginator = this.paginator;
-    // });
+      this.tagList = new MatTableDataSource(arr);
+      this.tagList.sort = this.sort;
+      this.tagList.paginator = this.paginator;
+    });
 
-    this.service.getTags()
-      .subscribe(tags => {
-        let arr = [];
-        arr = Object.values(tags);
+    // this.service.getTags()
+    //   .subscribe(tags => {
+    //     let arr = [];
+    //     arr = Object.values(tags);
 
-        this.tagList = new MatTableDataSource(arr);
-        this.tagList.sort = this.sort;
-        this.tagList.paginator = this.paginator;
-      }, (err) => {
-        this.tagList = new MatTableDataSource([]);
-        this.notify.error(err);
-      });
+    //     this.tagList = new MatTableDataSource(arr);
+    //     this.tagList.sort = this.sort;
+    //     this.tagList.paginator = this.paginator;
+    //   }, (err) => {
+    //     this.tagList = new MatTableDataSource([]);
+    //     this.notify.error(err);
+    //   });
     // console.log(this.tagList);
   }
 

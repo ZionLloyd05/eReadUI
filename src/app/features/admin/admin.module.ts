@@ -41,6 +41,8 @@ const adminRoutes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(adminRoutes),
+    StoreModule.forFeature('tags', fromReducer.tagReducer),
+    EffectsModule.forFeature([TagEffect]),
     MatTabsModule,
     FormsModule,
     ReactiveFormsModule,
