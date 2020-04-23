@@ -1,3 +1,5 @@
+import { TagEffect } from './admin/tag/_state/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
@@ -9,7 +11,8 @@ import { tagReducer } from './admin/tag/_state/reducers';
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature('tags', tagReducer)
+    StoreModule.forFeature('tags', tagReducer),
+    EffectsModule.forFeature([TagEffect])
   ]
 })
 export class FeaturesModule { }

@@ -25,7 +25,7 @@ export class TagComponent implements OnInit {
     private service: TagService,
     private dialog: MatDialog,
     private notify: NotifyService,
-    // private store: Store<fromTag.AppState>
+    private store: Store<fromTag.AppState>
     ) { }
 
   tagList: MatTableDataSource<any>;

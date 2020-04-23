@@ -146,6 +146,7 @@ function isTokenExpired(token) {
     const claims = jwtHelper.decodeToken(token);
 
     if (claims.exp < new Date().getTime() / 1000) {
+        destroyToken();
         return true;
     } else {
         return false;
