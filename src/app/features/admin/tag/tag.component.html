@@ -1,1 +1,55 @@
-<p>tag works!</p>
+<!-- <app-tag-box></app-tag-box> -->
+<div class="search-div row">
+    <div class="col-md-10">
+        <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Enter Search" autocomplete="off" (keyup)="applyFilter()">
+            <button matSuffix mat-icon-button aria-label="clear" *ngIf="searchKey" (click)="onSearchClear()">
+                <i class="mdi mdi-close"></i>
+            </button>
+        </mat-form-field>
+    </div>
+    <div class="col-md-2">
+        <button mat-raised-button (click)="onCreate()">
+            <i class="mdi mdi-plus"></i> New Tag
+        </button>
+    </div>
+</div>
+<div class="mat-elevation-z8">
+    <mat-table [dataSource]="tagList" matSort>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <ng-container matColumnDef="s/n">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>S/N</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button mat-icon-button ><i class="mdi mdi-border-color"></i></button>
+              <button mat-icon-button ><i class="mdi mdi-delete-forever"></i></button>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                Loading Tags...
+            </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+              No Data...
+            </mat-footer-cell>
+          </ng-container>
+        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': tagList!=null}"></mat-footer-row>
+        <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(tagList!=null && tagList.data.length == 0)}">
+        </mat-footer-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButton></mat-paginator>
+</div>

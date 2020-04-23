@@ -52,6 +52,7 @@ export function authReducer(
         case authActions.AuthActionTypes.RETRY_LOGIN: {
             const token = action.payload;
             if (isTokenExpired(token)) {
+                console.log('expired');
                 return {
                     ...state,
                     isAuthenticating: false,
@@ -117,7 +118,7 @@ export function authReducer(
 function saveToken(token: string) {
 
     const tokenInStorage = localStorage.getItem('token') || null;
-    if (tokenInStorage != null) {
+    if (tokenInStorage === null) {
         localStorage.setItem('token', token);
     }
 }
