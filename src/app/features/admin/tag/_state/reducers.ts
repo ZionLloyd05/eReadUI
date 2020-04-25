@@ -98,7 +98,8 @@ export function tagReducer(
         case tagActions.TagActionTypes.UPDATE: {
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                isLoaded: false
             };
         }
         case tagActions.TagActionTypes.UPDATE_COMPLETED: {

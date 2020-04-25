@@ -38,8 +38,11 @@ export class TagService {
     return this.http.put(`${this.baseUrl}/${payload.id}`, payload);
   }
 
+  deleteTag(id: any) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
   populateForm(payload: Tag) {
     this.tagForm.setValue(payload);
-    console.log(this.tagForm.value);
   }
 }

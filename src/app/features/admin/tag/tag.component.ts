@@ -41,8 +41,6 @@ export class TagComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new tagActions.GetAll());
     this.store.subscribe(state => {
-      this.tagState = state.tags;
-      console.log(this.tagState);
       this.tags = state.tags.tags;
       let arr = [];
       arr = Object.values(this.tags);
@@ -50,6 +48,10 @@ export class TagComponent implements OnInit {
       this.tagList = new MatTableDataSource(arr);
       this.tagList.sort = this.sort;
       this.tagList.paginator = this.paginator;
+
+      if (state.tags.isLoaded && !state.tags.isLoading) {
+        this.notify.success('Tag was saved successfully!');
+      }
     });
 
   }
@@ -84,15 +86,11 @@ export class TagComponent implements OnInit {
       // save tag
       await this.store.dispatch(new tagActions.Create(tagPayload));
       this.clearForm(formDt);
-      this.notify.success(tagPayload.name + ' tag was created successfully!');
-
     } else {
       // this.service.updateTag(tagPayload);
       await this.store.dispatch(new tagActions.Update(tagPayload));
       this.clearForm(formDt);
-      this.notify.success(tagPayload.name + ' tag was updated successfully!');
     }
-    console.log(this.tagState);
   }
 
   clearForm(formDt: any) {
