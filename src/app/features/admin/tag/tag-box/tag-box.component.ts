@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, FormControl, Validators, FormGroupDirective } f
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Tag } from '../../_models/ITag';
+import * as fromTag from '../_state/reducers';
+import * as tagActions from '../_state/actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-tag-box',
@@ -12,15 +15,19 @@ import { Tag } from '../../_models/ITag';
 export class TagBoxComponent implements OnInit {
 
   tagForm: FormGroup;
+  isLoading = false;
   @Output() saveTag = new EventEmitter();
   constructor(
     public service: TagService,
     public dialogRef: MatDialogRef<TagBoxComponent>,
+    private store: Store<fromTag.AppState>
     // private notify: NotifyService
   ) { }
 
   ngOnInit() {
-
+    this.store.subscribe(state => {
+      this.isLoading = state.tags.isLoading;
+    });
   }
 
   onClear() {
@@ -30,10 +37,7 @@ export class TagBoxComponent implements OnInit {
   }
 
   onSubmit(formDirective: FormGroupDirective) {
-    console.log('submitted');
-    console.log(this.service.tagForm);
     if (this.service.tagForm.valid) {
-      console.log('tag valid');
       const tagPayload: Tag = {
         id: this.service.tagForm.get('id').value,
         name: this.service.tagForm.get('name').value,

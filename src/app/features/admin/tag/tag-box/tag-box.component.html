@@ -27,11 +27,13 @@
         </div>
         <!-- Button -->
     <div class="form-group row">
-        <div class="col-md-6">
-          <button mat-raised-button class="w-full" color="primary">Save</button>
+        <div class="col-md-10">
+          <button [disabled]="isLoading" mat-raised-button class="w-full" color="primary">
+              {{ (isLoading) ? 'Saving Tag...' : 'Save' }}
+          </button>
         </div>
-        <div class="col-md-6">
-            <button mat-raised-button class="w-full" color="basic">Clear</button>
-          </div>
+        <div class="col-md-2">
+            <mat-progress-spinner *ngIf="isLoading" diameter="40" mode="indeterminate"></mat-progress-spinner>
+        </div>
       </div>
     </form>

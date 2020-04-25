@@ -102,11 +102,19 @@ export function tagReducer(
             };
         }
         case tagActions.TagActionTypes.UPDATE_COMPLETED: {
+            const elementIdx = state.tags
+                .findIndex(tag => tag.id === action.payload.id);
+            let newTagsState = [...state.tags];
+            newTagsState[elementIdx] = {
+                    ...newTagsState[elementIdx],
+                    name: action.payload.name,
+                    description: action.payload.description
+                };
             return {
                 ...state,
                 isLoaded: true,
                 isLoading: false,
-                tag: action.payload
+                tags: newTagsState
             };
         }
         case tagActions.TagActionTypes.UPDATE_FAILED: {

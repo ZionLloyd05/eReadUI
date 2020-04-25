@@ -35,6 +35,11 @@ export class TagService {
   }
 
   updateTag(payload: Tag) {
-    return this.http.put(this.baseUrl, payload);
+    return this.http.put(`${this.baseUrl}/${payload.id}`, payload);
+  }
+
+  populateForm(payload: Tag) {
+    this.tagForm.setValue(payload);
+    console.log(this.tagForm.value);
   }
 }

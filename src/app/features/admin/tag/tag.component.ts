@@ -3,8 +3,8 @@ import { TagBoxComponent } from './tag-box/tag-box.component';
 import { catchError, map } from 'rxjs/operators';
 import { TagService } from './../_services/tag.service';
 import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { of, Observable } from 'rxjs';
 
 import * as fromTag from './_state/reducers';
@@ -32,14 +32,18 @@ export class TagComponent implements OnInit {
   tags = [];
   displayedColumns: string[] = ['s/n', 'name', 'description', 'actions'];
   searchKey: string;
+
+  tagState;
+  dialogConfig =  new MatDialogConfig();
   @ViewChild(MatSort, null) sort: MatSort;
   @ViewChild(MatPaginator, null) paginator: MatPaginator;
   // count = 1;
   ngOnInit() {
     this.store.dispatch(new tagActions.GetAll());
     this.store.subscribe(state => {
+      this.tagState = state.tags;
+      console.log(this.tagState);
       this.tags = state.tags.tags;
-      console.log(this.tags);
       let arr = [];
       arr = Object.values(this.tags);
 
@@ -59,44 +63,56 @@ export class TagComponent implements OnInit {
   }
 
   onCreate() {
-    const dialogConfig =  new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.width = '60%';
 
-    const dialogRef = this.dialog.open(TagBoxComponent, dialogConfig);
+    const dialogRef = this.dialog.open(TagBoxComponent, this.dialogConfig);
 
     const sub = dialogRef.componentInstance.saveTag
       .subscribe(async (payload) => {
-        console.log('perform a save now');
-        console.log(payload);
-        await this.saveTag(payload);
-
-        // this.store.subscribe(state => {
-        //   const tag = state.tags.tag;
-        //   const data = this.tagList.data;
-        //   data.push(tag);
-        //   this.tagList.data = data;
-        // });
+          this.store.subscribe(state => {
+          dialogRef.componentInstance.isLoading = state.tags.isLoading;
+        });
+          await this.saveTag(payload);
       });
   }
 
   async saveTag(payload) {
-    console.log('here');
-    console.log(payload);
     const { tagPayload, formDt } = payload;
     if (tagPayload.id === 0) {
       // save tag
       await this.store.dispatch(new tagActions.Create(tagPayload));
+      this.clearForm(formDt);
+      this.notify.success(tagPayload.name + ' tag was created successfully!');
 
     } else {
       // this.service.updateTag(tagPayload);
-      console.log('update tag');
+      await this.store.dispatch(new tagActions.Update(tagPayload));
+      this.clearForm(formDt);
+      this.notify.success(tagPayload.name + ' tag was updated successfully!');
     }
+    console.log(this.tagState);
+  }
+
+  clearForm(formDt: any) {
     formDt.resetForm();
     this.service.tagForm.reset();
     this.service.initializeFormGroup();
-    this.notify.success('Form Submitted Successfully');
+  }
+
+  onEdit(row){
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.width = '60%';
+
+    this.service.populateForm(row);
+    const dialogRef = this.dialog.open(TagBoxComponent, this.dialogConfig);
+
+    const sub = dialogRef.componentInstance.saveTag
+      .subscribe(async (payload) => {
+        await this.saveTag(payload);
+      });
   }
 
 }

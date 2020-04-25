@@ -68,7 +68,7 @@ export class Update implements Action {
 
 export class UpdateCompleted implements Action {
     readonly type = TagActionTypes.UPDATE_COMPLETED;
-    constructor(public payload: any) {}
+    constructor(public payload: Tag) {}
 }
 
 export class UpdateFailed implements Action {

@@ -50,4 +50,23 @@ export class TagEffect {
                     )
                 )
         );
+
+    @Effect()
+    updateTag$: Observable<Action> = this.action$
+    .pipe(
+        ofType<tagActions.Update>(
+            tagActions.TagActionTypes.UPDATE
+        ),
+        map((action: tagActions.Update) => action.payload),
+        mergeMap((tag: Tag) =>
+            this.tagService.updateTag(tag)
+                .pipe(
+                    map(
+                        (edittedTag: Tag) =>
+                            new tagActions.UpdateCompleted(edittedTag)
+                    ),
+                    catchError(err => of(new tagActions.UpdateFailed(err)))
+                )
+            )
+    );
 }

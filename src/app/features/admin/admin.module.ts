@@ -9,6 +9,7 @@ import { TagComponent } from '../admin/tag/tag.component';
 import { CategoryComponent } from '../admin/category/category.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+
 import {
   MatTabsModule,
   MatCardModule,
@@ -19,8 +20,9 @@ import {
   MatButtonModule,
   MatTableModule,
   MatSortModule,
-  MatPaginatorModule, 
-  MatDialogModule, 
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatDialogModule,
   MatDialogRef} from '@angular/material';
 import {MatDividerModule} from '@angular/material/divider';
 import { TagBoxComponent } from './tag/tag-box/tag-box.component';
@@ -49,6 +51,7 @@ const adminRoutes: Routes = [
     MatCardModule,
     MatDividerModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
