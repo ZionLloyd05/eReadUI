@@ -4,18 +4,16 @@ import * as fromTag from './actions';
 import { createFeatureSelector } from '@ngrx/store';
 
 export interface TagState {
+  entities: { [id: number]: Tag };
   isLoading: boolean;
   isLoaded: boolean;
-  tags: Tag[];
-  tag: Tag;
   error: any;
 }
 
 export const initialState: TagState = {
+  entities: {},
   isLoading: false,
   isLoaded: false,
-  tags: [],
-  tag: null,
   error: null,
 };
 
@@ -30,14 +28,14 @@ export function tagReducer(
         isLoading: true,
       };
     }
-    case fromTag.TagActionTypes.GET_SINGLE_COMPLETED: {
-      return {
-        ...state,
-        isLoaded: true,
-        isLoading: false,
-        tag: action.payload,
-      };
-    }
+    // case fromTag.TagActionTypes.GET_SINGLE_COMPLETED: {
+    //   return {
+    //     ...state,
+    //     isLoaded: true,
+    //     isLoading: false,
+    //     tag: action.payload,
+    //   };
+    // }
     case fromTag.TagActionTypes.GET_SINGLE_FAILED: {
       return {
         ...state,
@@ -53,11 +51,26 @@ export function tagReducer(
       };
     }
     case fromTag.TagActionTypes.GET_ALL_COMPLETED: {
+      const tags = action.payload;
+
+      // tslint:disable-next-line: no-shadowed-variable
+      const entities = tags.reduce(
+        (entities: { [id: number]: Tag }, tag: Tag) => {
+          return {
+            ...entities,
+            [tag.id]: tag,
+          };
+        },
+        {
+          ...state.entities,
+        },
+      );
+
       return {
         ...state,
         isLoaded: true,
         isLoading: false,
-        tags: action.payload,
+        entities,
       };
     }
     case fromTag.TagActionTypes.GET_ALL_FAILED: {
@@ -79,7 +92,7 @@ export function tagReducer(
         ...state,
         isLoaded: true,
         isLoading: false,
-        tags: state.tags.concat(action.payload),
+        // tags: state.tags.concat(action.payload),
       };
     }
     case fromTag.TagActionTypes.CREATE_FAILED: {
@@ -98,23 +111,23 @@ export function tagReducer(
       };
     }
     case fromTag.TagActionTypes.UPDATE_COMPLETED: {
-      const elementIdx = state.tags.findIndex(
-        (tag) => tag.id === action.payload.id,
-      );
+      // const elementIdx = state.tags.findIndex(
+      //   (tag) => tag.id === action.payload.id,
+      // );
 
-      let newTagsState = [...state.tags];
+      // let newTagsState = [...state.tags];
 
-      newTagsState[elementIdx] = {
-        ...newTagsState[elementIdx],
-        name: action.payload.name,
-        description: action.payload.description,
-      };
+      // newTagsState[elementIdx] = {
+      //   ...newTagsState[elementIdx],
+      //   name: action.payload.name,
+      //   description: action.payload.description,
+      // };
 
       return {
         ...state,
         isLoaded: true,
         isLoading: false,
-        tags: newTagsState,
+        // tags: newTagsState,
       };
     }
     case fromTag.TagActionTypes.UPDATE_FAILED: {
@@ -131,6 +144,6 @@ export function tagReducer(
   }
 }
 
+export const getTagsEntities = (state: TagState) => state.entities;
 export const getTagsLoading = (state: TagState) => state.isLoading;
 export const getTagsLoaded = (state: TagState) => state.isLoaded;
-export const getTags = (state: TagState) => state.tags;

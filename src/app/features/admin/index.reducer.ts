@@ -25,7 +25,10 @@ export const getTagsState = createSelector(
   (state: AppState) => state.tags,
 );
 
-export const getAllTags = createSelector(getTagsState, fromTags.getTags);
+export const getAllTags = createSelector(
+  getTagsState,
+  fromTags.getTagsEntities,
+);
 export const getTagsLoading = createSelector(
   getTagsState,
   fromTags.getTagsLoaded,

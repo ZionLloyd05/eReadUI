@@ -44,22 +44,22 @@ export class TagComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new tagActions.GetAll());
 
-    this.store.select(fromStore.getTagsState).subscribe((state) => {
-      this.tags = state.tags;
-      let arr = [];
-      arr = Object.values(this.tags);
+    // this.store.select(fromStore.getTagsState).subscribe((state) => {
+    //   this.tags = state.tags;
+    //   let arr = [];
+    //   arr = Object.values(this.tags);
 
-      this.tagList = new MatTableDataSource(arr);
-      this.tagList.sort = this.sort;
-      this.tagList.paginator = this.paginator;
+    //   this.tagList = new MatTableDataSource(arr);
+    //   this.tagList.sort = this.sort;
+    //   this.tagList.paginator = this.paginator;
 
-      this.isLoaded = state.isLoaded;
+    //   this.isLoaded = state.isLoaded;
 
-      if (state.isLoaded && !state.isLoading) {
-        this.notify.success('Tag operation was successfully!');
-      }
+    //   if (state.isLoaded && !state.isLoading) {
+    //     this.notify.success('Tag operation was successfully!');
+    //   }
 
-    });
+    // });
   }
 
   applyFilter() {

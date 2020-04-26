@@ -26,16 +26,16 @@ export class TagService {
       description: ''
     });
   }
-  getTags() {
-    return this.http.get(this.baseUrl);
+  getTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(this.baseUrl);
   }
 
-  createTag(payload: Tag) {
-    return this.http.post(this.baseUrl, payload);
+  createTag(payload: Tag): Observable<Tag> {
+    return this.http.post<Tag>(this.baseUrl, payload);
   }
 
-  updateTag(payload: Tag) {
-    return this.http.put(`${this.baseUrl}/${payload.id}`, payload);
+  updateTag(payload: Tag): Observable<Tag> {
+    return this.http.put<Tag>(`${this.baseUrl}/${payload.id}`, payload);
   }
 
   deleteTag(id: any) {
