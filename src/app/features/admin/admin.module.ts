@@ -26,7 +26,8 @@ import {
   MatDialogRef} from '@angular/material';
 import {MatDividerModule} from '@angular/material/divider';
 import { TagBoxComponent } from './tag/tag-box/tag-box.component';
-import * as fromReducer from './tag/_state/reducers';
+import { reducer } from './index.reducer';
+import { CategoryBoxComponent } from './category/category-box/category-box.component';
 
 
 const adminRoutes: Routes = [
@@ -38,12 +39,13 @@ const adminRoutes: Routes = [
     DashboardComponent,
     TagComponent,
     CategoryComponent,
-    TagBoxComponent
+    TagBoxComponent,
+    CategoryBoxComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(adminRoutes),
-    StoreModule.forFeature('tags', fromReducer.tagReducer),
+    StoreModule.forFeature('admin', reducer),
     EffectsModule.forFeature([TagEffect]),
     MatTabsModule,
     FormsModule,

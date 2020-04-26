@@ -18,6 +18,7 @@ import { MatMenuModule, MatSnackBarModule } from '@angular/material';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from './shared/utils/http-error.interceptor';
+import { SlugifyPipe } from './shared/pipes/slugify.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HttpErrorInterceptor } from './shared/utils/http-error.interceptor';
     NavbarComponent,
     PrimaryNavComponent,
     SecondaryNavComponent,
-    FooterComponent
+    FooterComponent,
+    SlugifyPipe
   ],
   imports: [
     BrowserModule,

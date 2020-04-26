@@ -125,8 +125,6 @@ function saveToken(token: string) {
 
 
 function getAuthentication(token) {
-    console.log('hello bro');
-    console.log(token);
     const jwtHelper = new JwtHelperService();
     if (token == null) {
         return { token: null, claims: null, error: null };

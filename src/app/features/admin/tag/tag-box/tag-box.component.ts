@@ -6,6 +6,7 @@ import { Tag } from '../../_models/ITag';
 import * as fromTag from '../_state/reducers';
 import * as tagActions from '../_state/actions';
 import { Store } from '@ngrx/store';
+import { AppState } from '../../index.reducer';
 
 @Component({
   selector: 'app-tag-box',
@@ -20,7 +21,7 @@ export class TagBoxComponent implements OnInit {
   constructor(
     public service: TagService,
     public dialogRef: MatDialogRef<TagBoxComponent>,
-    private store: Store<fromTag.AppState>
+    private store: Store<AppState>
     // private notify: NotifyService
   ) { }
 
