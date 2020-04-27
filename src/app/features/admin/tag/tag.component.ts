@@ -13,7 +13,8 @@ import { MatDialog } from '@angular/material';
 import { of, Observable } from 'rxjs';
 
 import * as tagActions from './_state/actions';
-import * as fromStore from '../index.reducer';
+import * as fromTag from './_state/reducers';
+// import * as fromStore from '../index.reducer';
 import { Store } from '@ngrx/store';
 import { Tag } from '../_models/ITag';
 
@@ -28,7 +29,7 @@ export class TagComponent implements OnInit {
     private service: TagService,
     private dialog: MatDialog,
     private notify: NotifyService,
-    private store: Store<fromStore.AppState>
+    private store: Store<fromTag.AppState>
   ) {}
 
   tagList: MatTableDataSource<any>;
@@ -36,6 +37,7 @@ export class TagComponent implements OnInit {
   displayedColumns: string[] = ['s/n', 'name', 'description', 'actions'];
   searchKey: string;
   isLoaded = false;
+  isLoading = false;
   tagState;
   dialogConfig = new MatDialogConfig();
   @ViewChild(MatSort, null) sort: MatSort;
@@ -44,22 +46,28 @@ export class TagComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new tagActions.GetAll());
 
-    // this.store.select(fromStore.getTagsState).subscribe((state) => {
-    //   this.tags = state.tags;
-    //   let arr = [];
-    //   arr = Object.values(this.tags);
+    this.store.select(fromTag.getTags).subscribe((state) => {
 
-    //   this.tagList = new MatTableDataSource(arr);
-    //   this.tagList.sort = this.sort;
-    //   this.tagList.paginator = this.paginator;
+      // console.log(entities);
+      this.tags = state;
+      let arr = [];
+      arr = Object.values(this.tags);
 
-    //   this.isLoaded = state.isLoaded;
+      this.tagList = new MatTableDataSource(arr);
+      this.tagList.sort = this.sort;
+      this.tagList.paginator = this.paginator;
 
-    //   if (state.isLoaded && !state.isLoading) {
-    //     this.notify.success('Tag operation was successfully!');
-    //   }
+    });
 
-    // });
+    this.store.select(fromTag.getTagsLoading)
+      .subscribe(isLoading => this.isLoading = isLoading);
+
+    this.store.select(fromTag.getTagsLoaded)
+      .subscribe(isLoaded => this.isLoaded = isLoaded);
+
+    if (this.isLoaded && !this.isLoading) {
+      this.notify.success('Tag operation was successful');
+    }
   }
 
   applyFilter() {
@@ -95,7 +103,7 @@ export class TagComponent implements OnInit {
       this.clearForm(formDt);
     } else {
       // this.service.updateTag(tagPayload);
-      await this.store.dispatch(new tagActions.Update(tagPayload));
+      await this.store.dispatch(new tagActions.UpdateTag(tagPayload));
       this.clearForm(formDt);
     }
   }

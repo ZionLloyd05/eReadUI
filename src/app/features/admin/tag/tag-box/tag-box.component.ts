@@ -4,9 +4,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Tag } from '../../_models/ITag';
 import * as fromTag from '../_state/reducers';
-import * as tagActions from '../_state/actions';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../index.reducer';
 
 @Component({
   selector: 'app-tag-box',
@@ -21,14 +19,12 @@ export class TagBoxComponent implements OnInit {
   constructor(
     public service: TagService,
     public dialogRef: MatDialogRef<TagBoxComponent>,
-    private store: Store<AppState>
-    // private notify: NotifyService
+    private store: Store<fromTag.AppState>
   ) { }
 
   ngOnInit() {
-    this.store.subscribe(state => {
-      this.isLoading = state.tags.isLoading;
-    });
+    this.store.select(fromTag.getTagsLoading)
+      .subscribe(isLoading => this.isLoading = isLoading);
   }
 
   onClear() {

@@ -1,5 +1,6 @@
 import { Tag } from './../../_models/ITag';
 import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
 
 export enum TagActionTypes {
     GET_ALL = '[Tag] Get All',
@@ -61,14 +62,14 @@ export class CreateFailed implements Action {
     constructor(public payload: any) {}
 }
 
-export class Update implements Action {
+export class UpdateTag implements Action {
     readonly type = TagActionTypes.UPDATE;
     constructor(public payload: Tag) {}
 }
 
 export class UpdateCompleted implements Action {
     readonly type = TagActionTypes.UPDATE_COMPLETED;
-    constructor(public payload: Tag) {}
+    constructor(public payload: Update<Tag>) {}
 }
 
 export class UpdateFailed implements Action {
@@ -86,6 +87,6 @@ GetSingleFailed     |
 Create              |
 CreateCompleted     |
 CreateFailed        |
-Update              |
+UpdateTag              |
 UpdateCompleted     |
 UpdateFailed;

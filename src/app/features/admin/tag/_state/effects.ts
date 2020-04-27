@@ -7,6 +7,7 @@ import * as tagActions from './actions';
 
 import { Observable, of } from 'rxjs';
 import { map, mergeMap, exhaustMap, catchError, switchMap } from 'rxjs/operators';
+import { Update } from '@ngrx/entity';
 
 @Injectable()
 export class TagEffect {
@@ -54,16 +55,19 @@ export class TagEffect {
     @Effect()
     updateTag$: Observable<Action> = this.action$
         .pipe(
-            ofType<tagActions.Update>(
+            ofType<tagActions.UpdateTag>(
                 tagActions.TagActionTypes.UPDATE
             ),
-            map((action: tagActions.Update) => action.payload),
+            map((action: tagActions.UpdateTag) => action.payload),
             mergeMap((tag: Tag) =>
                 this.tagService.updateTag(tag)
                     .pipe(
                         map(
                             (edittedTag: Tag) =>
-                                new tagActions.UpdateCompleted(edittedTag)
+                                new tagActions.UpdateCompleted({
+                                    id: edittedTag.id,
+                                    changes: edittedTag
+                                })
                         ),
                         catchError(err => of(new tagActions.UpdateFailed(err)))
                     )

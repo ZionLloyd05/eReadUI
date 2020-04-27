@@ -23,16 +23,15 @@ import {
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatDialogModule,
-  MatDialogRef} from '@angular/material';
-import {MatDividerModule} from '@angular/material/divider';
+  MatDialogRef,
+} from '@angular/material';
+import { MatDividerModule } from '@angular/material/divider';
 import { TagBoxComponent } from './tag/tag-box/tag-box.component';
-import { reducer } from './index.reducer';
+// import { reducer } from './index.reducer';
 import { CategoryBoxComponent } from './category/category-box/category-box.component';
+import { tagReducer } from './tag/_state/reducers';
 
-
-const adminRoutes: Routes = [
-  { path: '', component: DashboardComponent }
-]
+const adminRoutes: Routes = [{ path: '', component: DashboardComponent }];
 
 @NgModule({
   declarations: [
@@ -40,12 +39,12 @@ const adminRoutes: Routes = [
     TagComponent,
     CategoryComponent,
     TagBoxComponent,
-    CategoryBoxComponent
+    CategoryBoxComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(adminRoutes),
-    StoreModule.forFeature('admin', reducer),
+    StoreModule.forFeature('tags', tagReducer),
     EffectsModule.forFeature([TagEffect]),
     MatTabsModule,
     FormsModule,
@@ -63,12 +62,14 @@ const adminRoutes: Routes = [
     MatPaginatorModule,
     MatSortModule,
   ],
-  providers: [DatePipe, TagService ,
+  providers: [
+    DatePipe,
+    TagService,
     {
       provide: MatDialogRef,
-      useValue: {}
+      useValue: {},
     },
   ],
-  entryComponents: [TagBoxComponent]
+  entryComponents: [TagBoxComponent],
 })
-export class AdminModule { }
+export class AdminModule {}
